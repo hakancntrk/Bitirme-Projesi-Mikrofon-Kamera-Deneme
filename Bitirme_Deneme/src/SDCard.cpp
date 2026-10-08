@@ -24,6 +24,36 @@ bool SDCard::isReady() {
     return m_ready;
 }
 
+int SDCard::nextFileNumber(const char *prefix, const char *ext) {
+    if (!m_ready) return 1;
+
+    File root = SD_MMC.open("/");
+    if (!root || !root.isDirectory()) return 1;
+
+    int maxNo = 0;
+    size_t plen = strlen(prefix);
+    size_t elen = strlen(ext);
+
+    File f = root.openNextFile();
+    while (f) {
+        if (!f.isDirectory()) {
+            const char *ad = f.name();
+            if (ad[0] == '/') ad++;   // bazi surumler basta '/' dondurur
+            size_t len = strlen(ad);
+            if (len > plen + elen &&
+                strncmp(ad, prefix, plen) == 0 &&
+                strcmp(ad + len - elen, ext) == 0) {
+                int no = atoi(ad + plen);
+                if (no > maxNo) maxNo = no;
+            }
+        }
+        f.close();
+        f = root.openNextFile();
+    }
+    root.close();
+    return maxNo + 1;
+}
+
 bool SDCard::savePhoto(const uint8_t *buffer, size_t size, int photoNumber) {
     if (!m_ready || !buffer || size == 0) return false;
 
