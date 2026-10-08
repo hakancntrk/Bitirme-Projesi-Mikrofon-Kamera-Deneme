@@ -42,13 +42,19 @@
 // 4. SISTEM PARAMETRELERI
 // ==============================================================================
 #define FOTO_ARALIK_SN        30    // Periyodik fotograf araligi (saniye)
-#define SES_ESIK_DEGERI       600   // Ses algilama RMS esigi
-#define AUDIO_SAMPLE_RATE     16000 // Ses ornekleme frekansi (16 kHz)
+#define SES_ESIK_DEGERI       150   // Ses algilama RMS esigi (MIC_DEBUG_RMS ile kalibre et)
+// T5848 modlari SCK frekansina gore secilir (datasheet DS-000479):
+//   Low Power : 600-800 kHz  (fs = SCK/48, 16-bit veri)
+//   High Qual.: 2.0-3.7 MHz  (fs = SCK/64, 24-bit veri)
+// ESP32 32-bit slot kullanir -> SCK = fs x 64. 16 kHz => 1.024 MHz = HICBIR MODA GIRMEZ.
+// 48 kHz => 3.072 MHz = High Quality Mode (datasheet ornegi). (Alt sinir: fs >= 31.25 kHz)
+#define AUDIO_SAMPLE_RATE     48000
 
 // --- Ses isleme ayarlari ---
-// T5848 verisi 32-bit slotun ust 24 biti. >>16 = tam olcek (sessiz kalabilir),
-// >>14 = +12 dB kazanc (saturasyonlu, tasma yok). Sessiz gelirse 12'ye dusur.
-#define MIC_SHIFT             14
+// HQM'de duyarlilik -37 dBFS (94 dB SPL). 24-bit veri 32-bit slotun ustunde.
+// >>16 = tam olcek (cok sessiz), >>11 = +30 dB kazanc (saturasyonlu).
+// Konusma ~65 dB SPL'de RMS ~370 civari (tahmin). Cok sessiz/gurultulu ise 10-12 arasi dene.
+#define MIC_SHIFT             11
 // WAKE (AAD) pini yalnizca T5848 AAD modu konfigure edildiyse anlamli.
 // Konfigurasyon yazilana kadar 0 kalsin (sadece RMS esigi kullanilir).
 #define USE_WAKE_PIN          0
