@@ -26,7 +26,7 @@ bool Microphone::begin() {
         .channel_format = I2S_CHANNEL_FMT_ONLY_LEFT,
         .communication_format = I2S_COMM_FORMAT_STAND_I2S,
         .intr_alloc_flags = ESP_INTR_FLAG_LEVEL1,
-        .dma_buf_count = 8,      // SD yazma takilmalarina karsi ~256 ms tampon
+        .dma_buf_count = 16,     // 48 kHz'de ~170 ms tampon (SD yazma takilmalarina karsi)
         .dma_buf_len = 512,
         .use_apll = false
     };
@@ -59,7 +59,8 @@ bool Microphone::begin() {
 int Microphone::convertBlock(const int32_t *raw, int16_t *out, int n) {
     if (n <= 0) return 0;
 
-    const float R = 0.995f;          // DC blocker (~13 Hz kesim @16 kHz)
+    // DC blocker, ~20 Hz kesim (mikrofonun kendi HPF'si 27 Hz)
+    const float R = 1.0f - (2.0f * 3.14159265f * 20.0f / (float)AUDIO_SAMPLE_RATE);
     int64_t kareToplami = 0;
 
     for (int i = 0; i < n; i++) {
