@@ -5,7 +5,7 @@
 #include "Microphone.h"
 
 // Sayaclar ve zaman takibi
-static int fotoSayaci = 1;
+static int fotoSayaci = 1;   // setup()'ta SD'deki mevcut dosyalara gore ayarlanir
 static int sesSayaci  = 1;
 static unsigned long sonFotoZamani = 0;
 
@@ -19,6 +19,10 @@ void setup() {
 
     // Modulleri baslat
     SDCard::begin();
+    // Reset sonrasi eski dosyalarin uzerine yazmamak icin numaralandirmaya kaldigi yerden devam et
+    fotoSayaci = SDCard::nextFileNumber("foto_", ".jpg");
+    sesSayaci  = SDCard::nextFileNumber("ses_", ".wav");
+    Serial.printf("[SISTEM] Siradaki dosyalar: foto_%d.jpg, ses_%d.wav\n", fotoSayaci, sesSayaci);
     Camera::begin();
     Microphone::begin();
 
