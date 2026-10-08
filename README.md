@@ -6,7 +6,7 @@
 
 * **Mikrodenetleyici:** ESP32-S3-N16R8 (16MB Flash, 8MB PSRAM)
 * **Kamera:** OV3660 (VGA 640x480, JPEG formatında)
-* **Mikrofon:** TDK InvenSense T5848 (I2S, 16 kHz Mono, AAD / VAD destekli)
+* **Mikrofon:** TDK InvenSense T5848 (I2S, 48 kHz Mono, High Quality Mode; AAD destekli ama henüz kullanılmıyor)
 * **Depolama:** Kart üzerindeki dahili MicroSD kart yuvası (SDMMC 1-Bit modu)
 
 ---
@@ -23,7 +23,7 @@ Kart üzerindeki dahili soket doğrudan bağlıdır, harici kablo gerekmez:
 * `SCK / CLK` (Saat) ➡️ `GPIO 42`
 * `WS / LRCLK` (Word Select) ➡️ `GPIO 41`
 * `SD / DATA` (Veri Çıkışı) ➡️ `GPIO 2`
-* `WAKE` (Ses Algılama Kesmesi) ➡️ `GPIO 1`
+* `WAKE` (Ses Algılama Kesmesi) ➡️ `GPIO 1` (AAD konfigüre edilmedikçe kullanılmıyor)
 * `LR` (Kanal Seçimi) ➡️ `GND` (Sol kanal)
 
 ### 3. OV3660 Kamera
