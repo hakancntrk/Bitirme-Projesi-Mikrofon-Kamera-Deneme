@@ -45,4 +45,16 @@
 #define SES_ESIK_DEGERI       600   // Ses algilama RMS esigi
 #define AUDIO_SAMPLE_RATE     16000 // Ses ornekleme frekansi (16 kHz)
 
+// --- Ses isleme ayarlari ---
+// T5848 verisi 32-bit slotun ust 24 biti. >>16 = tam olcek (sessiz kalabilir),
+// >>14 = +12 dB kazanc (saturasyonlu, tasma yok). Sessiz gelirse 12'ye dusur.
+#define MIC_SHIFT             14
+// WAKE (AAD) pini yalnizca T5848 AAD modu konfigure edildiyse anlamli.
+// Konfigurasyon yazilana kadar 0 kalsin (sadece RMS esigi kullanilir).
+#define USE_WAKE_PIN          0
+// 1 ise saniyede bir RMS degeri basilir -> SES_ESIK_DEGERI'ni kalibre etmek icin.
+#define MIC_DEBUG_RMS         1
+#define SES_SUSME_MS          2000   // Ses kesildikten sonra kayit suresi
+#define SES_MAX_KAYIT_MS      10000  // Tek kaydin ust siniri
+
 #endif // PINS_H
