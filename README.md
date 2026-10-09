@@ -22,8 +22,9 @@ Kart üzerindeki dahili soket doğrudan bağlıdır, harici kablo gerekmez:
 ### 2. TDK T5848 I2S Mikrofon
 * `SCK / CLK` (Saat) ➡️ `GPIO 42`
 * `WS / LRCLK` (Word Select) ➡️ `GPIO 41`
-* `SD / DATA` (Veri Çıkışı) ➡️ `GPIO 2`
+* `SD / DATA` (Veri Çıkışı) ➡️ `GPIO 14`
 * `WAKE` (Ses Algılama Kesmesi) ➡️ `GPIO 1` (AAD konfigüre edilmedikçe kullanılmıyor)
+* `THSEL` (AAD ayarı, şimdilik kullanılmıyor ama PCB'de bağlanmalı) ➡️ `GPIO 21`
 * `LR` (Kanal Seçimi) ➡️ `GND` (Sol kanal)
 
 ### 3. OV3660 Kamera
