@@ -31,12 +31,16 @@
 #define SD_DATA_PIN           40
 
 // ==============================================================================
-// 3. TDK T5848 MIKROFON PINLERI (I2S Arayuzu)
+// 3. TDK T5848 MIKROFON PINLERI (I2S Arayuzu)  -- PCB ICIN SABIT PIN LISTESI
 // ==============================================================================
+// Kullanilmayan/kacinilan pinler: 0,3,45,46 (strapping), 19,20 (USB), 35-37 (PSRAM),
+// 43,44 (UART), 2 ve 48 (kart uzerinde LED var), 4-13,15-18 (kamera), 38-40 (SD).
 #define MIC_SCK_PIN           42  // I2S Bit Saati (CLK)
 #define MIC_WS_PIN            41  // I2S Word Select (WS)
-#define MIC_SD_PIN            2   // I2S Ses Veri Girisi (DATA)
+#define MIC_SD_PIN            14  // I2S Ses Veri Girisi (DATA)  (GPIO2'de LED var, kullanma)
 #define MIC_WAKE_PIN          1   // Ses aktivite kesme pini (WAKE)
+#define MIC_THSEL_PIN         21  // AAD konfigurasyonu icin (su an yazilimda kullanilmiyor, PCB'de bagli olsun)
+// Yedek bos pin: GPIO47
 
 // ==============================================================================
 // 4. SISTEM PARAMETRELERI
